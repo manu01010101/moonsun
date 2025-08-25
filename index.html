@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>moonsun</title>
+
+  <!-- Fuente Noto Serif -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <style>
+    /* Aplicamos Noto Serif */
+    .noto-serif {
+      font-family: "Noto Serif", serif;
+      font-optical-sizing: auto;
+      font-weight: 400;
+      font-style: normal;
+      font-variation-settings: "wdth" 100;
+    }
+
+    :root{
+      --pink-50: #fff1f7;
+      --pink-200: #ffb1cf;
+      --pink-300: #ff8eb9;
+      --pink-500: #ff4e92;
+      --pink-600: #e23d80;
+      --pink-700: #bf2f6a;
+      --pink-800: #9b2557;
+      --ink-900: #201a1c;
+      --ink-400: #6b5a62;
+      --white: #fff;
+      --radius-lg: 18px;
+      --shadow-1: 0 10px 30px rgba(255, 78, 146, 0.2);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{
+      font-family: "Noto Serif", serif; /* 👈 se aplica a toda la página */
+      background: linear-gradient(160deg, var(--pink-50), #ffe7f2 40%, #ffeaf6);
+      color: var(--ink-900);
+      line-height:1.5;
+    }
+    header{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:16px 24px;margin:20px auto;max-width:1100px;
+      background:rgba(255,255,255,.6);
+      border:1px solid rgba(255,110,163,.25);
+      border-radius:var(--radius-lg);
+      backdrop-filter:blur(8px);
+      box-shadow:var(--shadow-1);
+    }
+    header .brand{font-weight:900;font-size:1.3rem;color:var(--pink-800);text-decoration:none;}
+    nav button{
+      background:none;border:none;color:var(--pink-700);font-weight:600;
+      margin-left:12px;cursor:pointer;font-size:1rem;
+    }
+    .hero{
+      text-align:center;padding:60px 20px;
+      max-width:800px;margin:auto;
+    }
+    .hero h1{font-size:3rem;font-weight:900;color:var(--pink-800);}
+    .hero p{margin-top:12px;font-size:1.1rem;color:var(--ink-400);}
+    .cta{margin-top:28px;display:flex;justify-content:center;gap:16px;flex-wrap:wrap;}
+    .btn{
+      padding:12px 24px;border-radius:999px;font-weight:700;cursor:pointer;
+      transition:.2s;font-family:"Noto Serif", serif;
+    }
+    .btn.primary{background:var(--pink-600);border:2px solid var(--pink-600);color:var(--white);}
+    .btn.outline{background:transparent;border:2px solid var(--pink-500);color:var(--pink-700);}
+    .btn:hover{transform:scale(1.05);}
+    section.cards{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:20px;max-width:1100px;margin:40px auto;padding:0 20px;
+    }
+    .card{
+      background:rgba(255,255,255,.7);
+      border:1px solid rgba(255,110,163,.25);
+      border-radius:var(--radius-lg);
+      padding:20px;text-align:center;
+      box-shadow:0 4px 14px rgba(0,0,0,.12);
+    }
+    .card h3{margin-bottom:8px;color:var(--pink-800);}
+    .card p{color:var(--ink-400);margin-bottom:12px;}
+    .card button{background:var(--pink-500);color:var(--white);border:none;padding:8px 14px;border-radius:999px;cursor:pointer;}
+    footer{text-align:center;margin:40px auto;color:var(--ink-400);}
+    .toast{
+      position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(120%);
+      background:var(--ink-900);color:#fff;padding:10px 16px;border-radius:8px;
+      opacity:0;transition:.25s;z-index:99;
+    }
+    .toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+  </style>
+</head>
+<body>
+  <header>
+    <a href="#" class="brand">moonsun</a>
+    <nav>
+      <button data-action="about">Acerca</button>
+      <button data-action="features">Funciones</button>
+      <button data-action="contact">Contacto</button>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1 class="noto-serif">Bienvenida a moonsun</h1>
+    <p>Una página de inicio rosita, moderna y lista para personalizar a tu estilo.</p>
+    <div class="cta">
+      <button class="btn primary" data-action="start">Comenzar</button>
+      <button class="btn outline" data-action="demo">Ver demo</button>
+    </div>
+  </section>
+
+  <section class="cards">
+    <div class="card">
+      <h3>Perfil</h3>
+      <p>Edita tu información y foto.</p>
+      <button data-action="profile">Abrir</button>
+    </div>
+    <div class="card">
+      <h3>Galería</h3>
+      <p>Sube tus fotos favoritas.</p>
+      <button data-action="gallery">Abrir</button>
+    </div>
+    <div class="card">
+      <h3>Notas</h3>
+      <p>Guarda ideas y pendientes.</p>
+      <button data-action="notes">Abrir</button>
+    </div>
+  </section>
+
+  <footer>
+    <p>hecho con ♡ — moonsun</p>
+  </footer>
+
+  <div class="toast"></div>
+
+  <script>
+    const toast=document.querySelector('.toast');
+    function showToast(msg){
+      toast.textContent=msg;
+      toast.classList.add('show');
+      clearTimeout(showToast._t);
+      showToast._t=setTimeout(()=>toast.classList.remove('show'),1800);
+    }
+    document.addEventListener('click',e=>{
+      const btn=e.target.closest('[data-action]');
+      if(!btn) return;
+      const msgs={
+        start:'¡Empecemos! ✨',
+        demo:'Mostrando demo…',
+        about:'moonsun: simple y bonito.',
+        features:'Funciones: botones, tarjetas y toasts.',
+        contact:'Escríbenos: hola@moonsun.local',
+        profile:'Abriendo perfil…',
+        gallery:'Abriendo galería…',
+        notes:'Abriendo notas…'
+      };
+      showToast(msgs[btn.dataset.action]||'Click');
+    });
+  </script>
+</body>
+</html>
